@@ -1,0 +1,449 @@
+﻿艺人模型展示交接文档
+
+
+一：抓取数据源路径   
+统一为
+/music/warehouse/ArtistModel-data/platform/yearmonthday
+
+
+1）platform为平台名
+例如艺人数据为artist  mv数据为mv等
+
+2）yearmonthday为年月日例如三月抓取的数据将放在
+/music/warehouse/ArtistModel-data/platform/20170401中
+
+
+
+
+判断数据源文件是否存在
+hadoop fs -ls /music/warehouse/ArtistModel-data/album/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/artist/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/concert/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/gequ/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/index/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/media/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/mediasp/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/movie/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/mv/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/piaofang/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/tv/20170401
+hadoop fs -ls /music/warehouse/ArtistModel-data/weibotieba/20170401
+
+
+
+
+
+
+
+使用：
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Album /music/warehouse/ArtistModel-data/album/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Artist /music/warehouse/ArtistModel-data/artist/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Concert /music/warehouse/ArtistModel-data/concert/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Gequ /music/warehouse/ArtistModel-data/gequ/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Index_mark /music/warehouse/ArtistModel-data/index/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Media_show /music/warehouse/ArtistModel-data/media/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Media_sp_reduce /music/warehouse/ArtistModel-data/mediasp/20170401 common
+
+
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Movie /music/warehouse/ArtistModel-data/movie/20170401 common
+
+
+hadoop jar Music_artist_display_Bata1.0.jar Spider.MV /music/warehouse/ArtistModel-data/mv/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Piaofang /music/warehouse/ArtistModel-data/piaofang/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.TV /music/warehouse/ArtistModel-data/tv/20170401 common
+hadoop jar Music_artist_display_Bata1.0.jar Spider.Weibotieba /music/warehouse/ArtistModel-data/weibotieba/20170401 common
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+判断表中是否运行正常
+
+
+hadoop fs -ls /music/warehouse/music_artistmodel_album/dt=20170401
+
+
+
+ALTER TABLE music_artistmodel_album add PARTITION (dt='20170401', product='wangyi') 
+PARTITION (dt='20170401', product='xiami');
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/music_artistmodel_music1/dt=20170401
+
+
+
+
+ALTER TABLE music_artistmodel_music1 add PARTITION (dt='20170401', product='douban') ;
+
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/artist_concert/dt=20170401
+
+
+
+
+ALTER TABLE artist_concert add PARTITION (dt='20170401', product='damai') 
+PARTITION (dt='20170401', product='yongle')
+PARTITION (dt='20170401', product='yongledamai');
+
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/music_artistmodel_gequ/dt=20170401
+
+
+ALTER TABLE music_artistmodel_gequ add PARTITION (dt='20170401', product='douban') 
+PARTITION (dt='20170401', product='qq')
+PARTITION (dt='20170401', product='wangyi')
+PARTITION (dt='20170401', product='xiami');
+
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/artist_index_mark/dt=20170401
+
+
+
+ALTER TABLE artist_index_mark add PARTITION (event_day='20170401') ;
+
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/music_artistmodel_media/dt=20170401
+
+
+ALTER TABLE music_artistmodel_media add PARTITION (dt='20170401', product='mangguo') 
+PARTITION (dt='20170401', product='qq')
+PARTITION (dt='20170401', product='souhu')
+PARTITION (dt='20170401', product='tudou')
+PARTITION (dt='20170401', product='youku');
+
+-----------------------------------------------------------------------------------------------------
+
+
+
+hadoop fs -ls /music/warehouse/music_artistmodel_mediasp/dt=20170401
+
+
+
+ALTER TABLE music_artistmodel_mediasp add PARTITION (dt='20170401', product='mangguo') 
+PARTITION (dt='20170401', product='qq')
+PARTITION (dt='20170401', product='souhu')
+PARTITION (dt='20170401', product='youku');
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+
+hadoop fs -ls /music/warehouse/music_artistmodel_movie/dt=20170401
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/music_artistmodel_mv/dt=20170401
+
+
+
+
+ALTER TABLE music_artistmodel_mv add PARTITION (dt='20170401', product='aiqiyi') 
+PARTITION (dt='20170401', product='qq')
+PARTITION (dt='20170401', product='xiami')
+PARTITION (dt='20170401', product='youku');
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/artist_movie_piaofang/dt=20170401
+
+
+
+
+ALTER TABLE music_artistmodel_mv add PARTITION (dt='20170401', product='china_piaofang');
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/music_artistmodel_tv/dt=20170401
+
+
+
+ALTER TABLE music_artistmodel_tv add PARTITION (dt='20170401', product='aiqiyi') 
+PARTITION (dt='20170401', product='qq')
+PARTITION (dt='20170401', product='douban')
+PARTITION (dt='20170401', product='tudou')
+PARTITION (dt='20170401', product='youku');
+-----------------------------------------------------------------------------------------------------
+
+hadoop fs -ls /music/warehouse/music_artistmodel_weibo/dt=20170401
+
+
+
+ALTER TABLE music_artistmodel_weibo add PARTITION (dt='20170401', product='tieba');
+-----------------------------------------------------------------------------------------------------
+
+
+select * from music_artistmodel_album where dt=20170401 limit 10;
+select * from music_artistmodel_music1 where dt=20170401 limit 10;
+select * from artist_concert where dt=20170401 limit 10;
+select * from music_artistmodel_gequ where dt=20170401 limit 10;
+select * from artist_index_mark where dt=20170401 limit 10;
+select * from music_artistmodel_media where dt=20170401 limit 10;
+select * from music_artistmodel_mediasp where dt=20170401 limit 10;
+select * from music_artistmodel_movie where dt=20170401 limit 10;
+select * from music_artistmodel_mv where dt=20170401 limit 10;
+select * from artist_movie_piaofang where dt=20170401 limit 10;
+select * from music_artistmodel_tv where dt=20170401 limit 10;
+select * from music_artistmodel_weibo where dt=20170401 limit 10;
+
+
+
+
+
+
+
+注：
+若存在运行完mr  hive无法取到数据的情况，则创建新分区即可查询数据
+
+ALTER TABLE music_artistmodel_mv（表明） add PARTITION (dt='20170315', product='acfun') （分区名）
+PARTITION (dt='20170315', product='aiqiyi')
+PARTITION (dt='20170315', product='bilibili')
+PARTITION (dt='20170315', product='letv')
+PARTITION (dt='20170315', product='music_station')
+PARTITION (dt='20170315', product='qq')
+PARTITION (dt='20170315', product='xiami')
+PARTITION (dt='20170315', product='youku');
+
+
+二：清洗脚本
+为Spider 打包成为jar包即可
+对应的脚本分别为
+Album  				专辑
+Artist 				艺人 
+Concert  			演出
+Gequ   				歌曲
+Index_mark  		微博指数
+Media_show   		综艺总站
+Media_sp_reduce     单期综艺（sp）
+Movie 			    电影
+MV    				 MV
+Piaofang			中国票房
+TV					电视剧
+WeiboTieba			微博，贴吧
+ToolUtils			工具类
+
+三：hIve任务及导出：
+统一在  music_report_artistmodel  （未启用调度）
+
+
+
+1）weibo_tieba
+任务名：music_hql_export_artistmodel_weibo-tieba
+
+2）电影movie
+任务名：music_hql_export_artistmodel_movie
+主要逻辑：对艺人名以逗号分隔成多条记录，以人名所处位置为艺人排名，由于抓取时以类型抓取，有多条相类似数据，
+order by primary_star  取第一条数据为有效数据输出
+
+
+3）电视剧TV
+任务名：music_hql_export_artistmodel_tv
+对艺人名以逗号分隔成多条记录，以人名所处位置为艺人排名
+
+
+4）综艺（show和sp合并输出）
+任务名：music_hql_export_artistmodel_media_union
+主要逻辑：对host，guest以逗号分隔成多条记录
+
+
+5）mv和mv上传
+
+mv任务名：music_hql_export_artistmodel_mv_2017
+
+
+mv上传  任务名：music_hql_export_artistmodel_mvupload_2017
+
+6）专辑
+任务名：music_hql_export_artistmodel_album
+
+
+7）微博指数
+任务名：music_hql_export_artistmodel_index_mark
+
+
+8）演出
+任务名：music_hql_export_artistmodel_concert
+主要逻辑：对时间以逗号分隔成多条记录，拆分成多条艺人演出记录。
+
+与演出收益表  music_artistmodel_concert_value
+关联，展示出每个艺人演出收益，关联字段： 艺人名，日期
+对日期进行统一处理regexp_replace(concert_single_time, '\\-|\\.|\\ ', '') 将-  , 和空格去掉。
+
+9）票房
+任务名：music_hql_export_artistmodel_movieplay
+主要逻辑：对艺人名以逗号分隔成多条记录，以人名所处位置为艺人排名。
+
+
+10）歌曲
+任务名：music_hql_export_artistmodel_gequ
+主要逻辑：添加百度音乐平台歌曲信息。取出上一月每首歌曲总播放，下载，收藏，评论，分享
+其中 
+评论量，分享量 依赖  
+1：music_rely_PutToHdfs_artistmodel_gequ_share_data 拉取任务   每月从3.106拉取每首歌分享信息
+2：music_rely_report_artistmodel_gequ_sharecomment  计算任务   进行分享量,评论量单独计算
+然后 存入表music_artistmodel_gequshare_comment 与百度音乐平台歌曲表匹配计算展示
+
+
+11）艺人
+任务名：music_hql_export_artistmodel_gequ
+主要逻辑：依赖   1.抓取的artist，2.mv，3.album，4.歌曲，5.评论分享量，6.网易云艺人补全量    
+做每个平台（比如qq和wangyi），每个艺人的各个歌曲，mv，专辑作品量，播放，下载，收藏，评论，分享量的关联展示
+
+外加百度音乐平台的所有艺人的各个歌曲，mv，专辑作品量，播放，下载，收藏，评论，分享量信息
+
+
+另：网易云艺人补全量（由于网易只能抓到其签约艺人2000个左右，要对网易艺人补全关联处理）
+任务名：music_hql_artistmodel_artist_all_wangyisinger
+主要逻辑：依赖歌曲，专辑，艺人表中网易的艺人名合并去重，当做艺人表中网易平台的全量艺人，再关联处理
+
+
+
+四：mapreduce数据清洗任务：
+
+统一在  Spider  （未启用调度）
+
+
+isdisplay,artist_note
+1）weibo_tieba
+类名：Weibotieba
+主要逻辑：以艺人名来匹配给出有效  微博、贴吧艺人库，匹配上则输出主要艺人名
+
+
+
+2）电影movie
+类名：Movie
+1建议优化json提取函数，适用性提升
+2建议将hive中间层的逻辑写入mapreduce，使数据质量提升，下游计算优化
+3未来可能加入每个艺人名的匹配，有优化空间
+
+
+3）电视剧TV
+类名：TV
+
+
+4）综艺（show和sp合并输出）
+类名：Media_show
+
+
+
+类名：Media_sp_reduce
+group by site_name,show_name,host,guest
+以sp_plays,barrage_counts,fav_counts三个字段总和最大的一条为输出
+逻辑有待后续优化
+
+
+
+isdisplay,artist_note
+5）mv和mv上传
+
+类名：MV
+主要逻辑：以艺人名来匹配给出有效  艺人库，匹配上则输出主要艺人名
+A,B站从mv_title中提取  #最长  有效艺人名为艺人名输出,
+
+isdisplay,artist_note
+6）专辑
+类名：Album
+主要逻辑：以艺人名来匹配给出有效  艺人库，匹配上则输出主要艺人名
+
+
+7）微博指数
+类名：Index_Mark
+注意微指数输出形式，参考hive任务中的注释及处理
+
+
+8）演出
+类名：Concert
+主要逻辑：若永乐大麦两边都有，则取出将它的site_name赋值为yongledamai
+
+
+9）票房
+类名：Piaofang
+主要逻辑：加入一个reduce过程，去除重复抓取数据
+
+
+isdisplay,artist_note
+10）歌曲
+类名：Gequ
+主要逻辑：以艺人名来匹配给出有效  艺人库，匹配上则输出主要艺人名
+
+
+isdisplay,artist_note
+11）艺人
+类名：Artist
+主要逻辑：以艺人名来匹配给出有效  艺人库，匹配上则输出主要艺人名
+
+其它：Artist_Isdisplay  在报表层匹配艺人（未使用）
+Media_sp：没有reduce过程，过多脏数据，现不使用
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+附录1 
+常用维护关联表sqoop语句
+
+
+
+1艺人演出价值表导出(concert)
+sqoop import -D mapreduce.job.queuename=common \
+--connect jdbc:mysql://192.168.217.22:9306/music_artist \
+--driver com.mysql.jdbc.Driver --username root --password 'apiapiapi' \
+--query "select *  \
+from music_artistmodel_concert_value where \$CONDITIONS;"  \
+--split-by singer  \
+--fields-terminated-by '\t' \
+--delete-target-dir \
+--target-dir /music/warehouse/music_artistmodel_concert_value \
+--null-string '\\N' --null-non-string '\\N' -m 1 --direct
+
+
+2艺人库匹配表导出(artist  gequ mv 等艺人匹配)
+sqoop import -D mapreduce.job.queuename=common \
+--connect jdbc:mysql://192.168.217.22:9306/music_artist \
+--driver com.mysql.jdbc.Driver --username root --password 'apiapiapi' \
+--query "select id,platform,artistname,remark  \
+from artist_isdisplay where \$CONDITIONS;"  \
+--split-by id  \
+--fields-terminated-by '\t' \
+--delete-target-dir \
+--target-dir /music/warehouse/music_artistmodel_artist_isdiplay/event_day=20170301 \
+--null-string '\\N' --null-non-string '\\N' -m 1 --direct
+
+
+
+create external table if not exists music_artistmodel_tieba_isdisplay
+(
+id string,platform string,artist_name string,remark string
+)
+PARTITIONED BY ( 
+event_day string)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY '\t';
+
+
+
+
+
+3贴吧匹配艺人导出（贴吧匹配）
+sqoop import -D mapreduce.job.queuename=common \
+--connect jdbc:mysql://192.168.217.22:9306/music_artist \
+--driver com.mysql.jdbc.Driver --username root --password 'apiapiapi' \
+--query "select *  \
+from artist_tieba_isdisplay where \$CONDITIONS;"  \
+--split-by id  \
+--fields-terminated-by '\t' \
+--delete-target-dir \
+--target-dir /music/warehouse/music_artistmodel_tieba_isdisplay/event_day=20170301 \
+--null-string '\\N' --null-non-string '\\N' -m 1 --direct
+
+ALTER TABLE music_artistmodel_tieba_isdisplay add PARTITION (event_day='20170301');
+
+
